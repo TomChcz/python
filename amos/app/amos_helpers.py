@@ -16,6 +16,3 @@ def login_required(f):
             return redirect(url_for("index", next=request.url))
         return f(*args, **kwargs)
     return decorated_function
-    
-def test_check():
-    pass

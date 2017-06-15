@@ -15,9 +15,48 @@ Test
 no test data in database
 {% else %}
 
+
+
+<h3>Good Luck!</h3>
+
 <!-- begin form -->
 <form action="{{ url_for('test_check') }}" method="post">
-<h3>Good Luck!</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Zadani</th>
+                <th></th>
+                <th>Tvoje reseni</th>
+                <th>Spravne reseni</th>
+                <th>body za ukol</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exercise in exercises %}
+            <tr>
+                <td>{{ exercise.description }}</td>
+                <td>=</td>
+                <td><input type="text" name="{{ exercise.math_id }}">
+                <input type "hidden" name="solution" value="{{ exercise.solution }}"></td>
+                <td>{{ exercise.solution }}</td>
+                <td>{{ exercise.points }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <input type="submit" value="Odeslat"/>
+</form>
+
+
+test size: {{exercises|length}}
+<br/>
+<br/>
+
+
+
+
+
+
     <br/>Nasobeni
     <br/>
     <table class="table table-striped">
@@ -134,12 +173,6 @@ no test data in database
     
 <!-- end form -->
 
-<!-- pre process form -->
-<br/>
-test size: {{exercises|length}}
-    
-    <br/>
-    <br/>
 
 
 {% endif %}

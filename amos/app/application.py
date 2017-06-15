@@ -24,7 +24,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # configure CS50 Library to use SQLite database
-db = SQL("sqlite:///db/amos.db")
+db = SQL("sqlite:///../db/amos.db")
 
 @app.route("/")
 def index():
@@ -121,8 +121,8 @@ def test_generator():
     else:
         return redirect(url_for("dashboard")) 
     
-    
-"""
-login_required wrapper http://flask.pocoo.org/docs/0.12/patterns/viewdecorators/
-"""
-        
+
+@app.route("/test_check", methods=["GET", "POST"])
+def test_check():
+    return redirect(url_for("dashboard"))
+    # check that all form data submitted
