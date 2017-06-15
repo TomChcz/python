@@ -1,2 +1,2 @@
 # python
-Python learning
+Python projects
