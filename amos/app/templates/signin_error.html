@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+signin error
+{% endblock %}
+
+{% block body %}
+<h1>signin error</h1>
+{{ error }}
+
+Retry <a href="{{ url_for('index') }}"/>here</a>
+
+{% endblock %}
