@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Uživatelé
+{% endblock %}
+
+{% block body %}
+<h2>Uživatelé</h2>
+
+logged user id: {{ logged_user }}
+<br/>
+<br/>
+
+<!-- check if at least 1 user in db -->
+{% if not users %}
+Ještě se nikdo neregistroval, zaregistrovat se můžeš <a href="{{ url_for('index') }}">tady</a>
+{% else %}
+
+
+    <h2>Seznam registrovaných uživatelů</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>user_id</th>
+        <th>user_name</th>
+        <th>user_email</th>
+        <th>hash</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+          <td>{{ user.user_id }}</td>
+          <td>{{ user.user_name }}</td>
+          <td>{{ user.user_email }}</td>
+          <td>{{ user.hash }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+zpět na <a href="{{ url_for('index') }}"/>úvodní stránku</a>
+
+{% endif %}
+{% endblock %}
