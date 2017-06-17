@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Test result
+{% endblock %}
+
+{% block body %}
+
+<h1>test result</h1>
+
+<br/>
+
+<h3>Pocet prikladu: {{ input_fields }}</h3><br/>
+
+Spravne: {{ correct }}<br/>
+Spatne: {{ wrong }}<br/>
+Uspesnost: {{ '%0.2f'| format(success_rate) }} %<br/>
+<br/>
+
+<!-- master table -->
+
+<table class="table">
+    <tr>
+        <td>
+            
+            <!-- begin zadani -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Zadani
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for description in descriptions %}
+                    <tr>
+                        <td>{{ description }}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            <!-- end zadani -->
+
+        </td>
+        <td>
+            
+            <!-- begin tvoje reseni -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Tvoje reseni
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for answer in answers %}
+                    <tr>
+                        <td>{% if answer == "" %}
+                                -
+                            {% else %}
+                                {{ answer }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+            <!-- end tvoje reseni -->
+            
+        </td>
+        
+        <td>
+            
+            <!-- begin hodnoceni -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Hodnoceni
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for score in scores_index %}
+                    <tr>
+                        <td>
+                            {{ score }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+            <!-- end hodnoceni -->
+            
+        </td>            
+            
+        <td>
+            
+            <!-- begin hodnoceni -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Reseni
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for solution in solutions %}
+                    <tr>
+                        <td>
+                            {{ solution }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+            <!-- end spravna odpoved -->
+            
+        </td>   
+    </tr>
+</table>
+
+
+
+<!-- old version
+<br/><br/>
+
+Zadani<br/>{% for description in descriptions %}
+                Priklad: {{ description }}<br/>
+                {% endfor %}
+Tvoje reseni:<br/>{% for answer in answers %}
+                Tvoje reseni: {% if answer == "" %}
+                                Nevyplneno
+                                {% else %}
+                                {{ answer }}
+                                {% endif %}<br/>
+                {% endfor %}
+                
+Hodnoceni:<br/>{% for scores in scores_index %}
+                Hodnoceni: {{ scores }}<br/>
+                {% endfor %}
+Spravny vysledek:<br/>{% for solution in solutions %}
+                Spravny vysledek: {{ solution }}<br/>
+                {% endfor %}
+                
+                
+-->      
+
+<br/>
+
+devel info:<br/>
+inputtype: {{ inputtype }}<br/>
+answers_type: {{ answers_type }}<br/>
+solutions_type: {{ solutions_type }}<br/>
+descriptions_type: {{ descriptions_type }}<br/>
+
+dashboard <a href="{{ url_for('dashboard') }}"/>here</a>
+
+{% endblock %}
+
+

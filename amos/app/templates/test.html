@@ -27,8 +27,6 @@ no test data in database
                 <th>Zadani</th>
                 <th></th>
                 <th>Tvoje reseni</th>
-                <th>Spravne reseni</th>
-                <th>body za ukol</th>
             </tr>
         </thead>
         <tbody>
@@ -36,14 +34,17 @@ no test data in database
             <tr>
                 <td>{{ exercise.description }}</td>
                 <td>=</td>
-                <td><input type="text" name="{{ exercise.math_id }}">
-                <input type "hidden" name="solution" value="{{ exercise.solution }}"></td>
-                <td>{{ exercise.solution }}</td>
-                <td>{{ exercise.points }}</td>
+                <td><input type="text" name="answer">
+                <input type="hidden" name="solution" value="{{ exercise.solution }}">
+                <input type="hidden" name="description" value="{{ exercise.description }}">
+                </td>
+                
             </tr>
+            
             {% endfor %}
         </tbody>
     </table>
+    <input type="hidden" name="test_size" value="{{exercises|length}}">
     <input type="submit" value="Odeslat"/>
 </form>
 
@@ -54,9 +55,7 @@ test size: {{exercises|length}}
 
 
 
-
-
-
+<!-- hide temporarily
     <br/>Nasobeni
     <br/>
     <table class="table table-striped">
@@ -169,11 +168,8 @@ test size: {{exercises|length}}
     <br/>
 
     <input type="submit" value="Odeslat"/>
-</form>
-    
-<!-- end form -->
 
-
+-->
 
 {% endif %}
 

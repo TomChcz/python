@@ -55,7 +55,6 @@ def signup():
         
         
         # remember user and send to dashboard
-        
         rows = db.execute("SELECT * FROM users WHERE user_email = :user_email", user_email=request.form.get("email"))
         session["user_session"] = rows[0]["user_id"]
         
@@ -77,7 +76,7 @@ def signin():
     # if user reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         
-        # ensure user email was submitted
+        # ensure user credentials were submitted
         if not request.form.get("email"):
             return render_template("signin_error.html", error="no email provided")
         
@@ -95,17 +94,18 @@ def signin():
         session["user_session"] = rows[0]["user_id"] # rows is array [0 = row zero][user_is is field in db user_id]
         
         # redirect user to dashboard
-        # return render_template("dashboard.html", users=rows)
         return redirect(url_for("dashboard"))
         
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
         return redirect(url_for("index"))
 
+# this generates the main user dashboard
 @app.route("/dashboard")
 @login_required
 def dashboard():
 
+    # query user details based on logged in session
     rows = db.execute("SELECT * FROM users WHERE user_id = :user_id", user_id=session.get("user_session"))
     return render_template("dashboard.html", users=rows)
     
@@ -124,5 +124,42 @@ def test_generator():
 
 @app.route("/test_check", methods=["GET", "POST"])
 def test_check():
-    return redirect(url_for("dashboard"))
+
+    # answer counters
+    correct = 0
+    wrong = 0
+
+    # remember test size for dynamic iteration over input fields
+    input_fields = int(request.form.get("test_size"))
+    
+    # check input type
+    inputtype = type(input_fields)
+    
+    # get answers and solutions and description from user input
+    answers = request.form.getlist("answer")
+    solutions = request.form.getlist("solution")
+    descriptions = request.form.getlist("description")
+    
+    # devel info, to be deleted
+    answers_type = type(answers)
+    solutions_type = type(solutions)
+    descriptions_type = type(descriptions)
+    
+    scores_index = []
+    
+    # iterate over answers and solutions
+    for i in range(input_fields):
+        if answers[i] == solutions[i]:
+            correct += 1
+            scores_index.append("Spravne")
+        else:
+            wrong += 1
+            scores_index.append("Spatne")
+            
+    # TODO create dict with answers and correct or wrong
+    
+    # calculate success rate
+    success_rate = (correct / input_fields) * 100
+     
+    return render_template("test_result.html", answers=answers, solutions=solutions, scores_index=scores_index, descriptions_type=descriptions_type, input_fields=input_fields, correct=correct, wrong=wrong, inputtype=inputtype, answers_type=answers_type, solutions_type=solutions_type, success_rate=success_rate, descriptions=descriptions)
     # check that all form data submitted
